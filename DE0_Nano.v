@@ -123,18 +123,90 @@ input 		     [1:0]		GPIO_0_IN;
 inout 		    [33:0]		GPIO_1;
 input 		     [1:0]		GPIO_1_IN;
 
+darkroom darkroom(
+	.clk_clk(CLOCK_50),                                          //                               clk.clk
+	.darkroom_0_conduit_end_mosi_o(GPIO_2[2]),                    //            darkroom_0_conduit_end.mosi_o
+	.darkroom_0_conduit_end_sck_o(GPIO_2[1]),                     //                                  .sck_o
+	.darkroom_0_conduit_end_ss_n_o(GPIO_2[0]),                    //                                  .ss_n_o
+	.darkroom_0_conduit_end_d_io({GPIO_0[28],GPIO_0[26],GPIO_0[24],GPIO_0[22],GPIO_0[20],GPIO_0[18],GPIO_0[16],GPIO_0[14],GPIO_0[12],GPIO_0[10],GPIO_0[8],GPIO_0[6]}),                      //                                  .d_io
+	.darkroom_0_conduit_end_e_io({GPIO_0[29],GPIO_0[27],GPIO_0[25],GPIO_0[23],GPIO_0[21],GPIO_0[19],GPIO_0[17],GPIO_0[15],GPIO_0[13],GPIO_0[11],GPIO_0[9],GPIO_0[7]}),                      //                                  .e_io
+	.darkroomootxdecoder_0_conduit_end_uart_tx(GPIO_2[3]),        //                                  .uart_tx
+	.darkroomootxdecoder_0_conduit_end_sensor_signals({GPIO_0[29],GPIO_0[27],GPIO_0[25],GPIO_0[23],GPIO_0[21],GPIO_0[19],GPIO_0[17],GPIO_0[15],GPIO_0[13],GPIO_0[11],GPIO_0[9],GPIO_0[7]}), //                                  .sensor_signals
+	.reset_reset_n(~reset)      
+);
 
-//=======================================================
-//  REG/WIRE declarations
-//=======================================================
 
+//DarkRoom #(1,12,50_000_000) darkroom(
+//	.clock(CLOCK_50),
+//	.reset_n(reset),
+////	.D_io({GPIO_1[32],GPIO_1[30],GPIO_1[28],GPIO_1[26],GPIO_1[24],GPIO_1[22],GPIO_1[20],
+////			 GPIO_1[18],GPIO_1[16],GPIO_1[14],GPIO_1[12],GPIO_1[10],GPIO_1[8],GPIO_1[6],GPIO_1[4],GPIO_1[2],
+////		    GPIO_1[0],GPIO_0[32],GPIO_0[30],GPIO_0[28],GPIO_0[26],GPIO_0[24],GPIO_0[22],GPIO_0[20],GPIO_0[18],
+////			 GPIO_0[16],GPIO_0[14],GPIO_0[12],GPIO_0[10],GPIO_0[8],GPIO_0[6],GPIO_0[4],GPIO_0[2],GPIO_0[0]}),
+////	.E_io({GPIO_1[33],GPIO_1[31],GPIO_1[29],GPIO_1[27],GPIO_1[25],GPIO_1[23],GPIO_1[21],
+////			 GPIO_1[17],GPIO_1[15],GPIO_1[13],GPIO_1[11],GPIO_1[9],GPIO_1[7],GPIO_1[5],GPIO_1[3],
+////		    GPIO_1[1],GPIO_0[33],GPIO_0[31],GPIO_0[29],GPIO_0[27],GPIO_0[25],GPIO_0[23],GPIO_0[21],GPIO_0[19],
+////			 GPIO_0[17],GPIO_0[15],GPIO_0[13],GPIO_0[11],GPIO_0[9],GPIO_0[7],GPIO_0[5],GPIO_0[3],GPIO_0[1]}),
+//	.D_io({GPIO_0[22],GPIO_0[20],GPIO_0[18],GPIO_0[16],GPIO_0[14],GPIO_0[12],GPIO_0[10],GPIO_0[8],GPIO_0[6],GPIO_0[4],GPIO_0[2],GPIO_0[0]}),
+//	.E_io({GPIO_0[23],GPIO_0[21],GPIO_0[19],GPIO_0[17],GPIO_0[15],GPIO_0[13],GPIO_0[11],GPIO_0[9],GPIO_0[7],GPIO_0[5],GPIO_0[3],GPIO_0[1]}),
+//	.sck_o(GPIO_2[0]), // clock
+//	.ss_n_o(GPIO_2[1]), // slave select
+//	.mosi_o(GPIO_2[2]) // mosi
+//);
+//
+//DarkRoomOOTXdecoder #(12,1) darkroomootxdecoder(
+//	.clock(CLOCK_50),
+//	.reset(reset),
+//	.uart_tx(GPIO_2[3]),
+////	.sensor_signals({GPIO_1[33],GPIO_1[31],GPIO_1[29],GPIO_1[27],GPIO_1[25],GPIO_1[23],GPIO_1[21],
+////						 GPIO_1[17],GPIO_1[15],GPIO_1[13],GPIO_1[11],GPIO_1[9],GPIO_1[7],GPIO_1[5],GPIO_1[3],
+////						 GPIO_1[1],GPIO_0[33],GPIO_0[31],GPIO_0[29],GPIO_0[27],GPIO_0[25],GPIO_0[23],GPIO_0[21],GPIO_0[19],
+////						 GPIO_0[17],GPIO_0[15],GPIO_0[13],GPIO_0[11],GPIO_0[9],GPIO_0[7],GPIO_0[5],GPIO_0[3],GPIO_0[1]})
+//	.sensor_signals({GPIO_0[23],GPIO_0[21],GPIO_0[19],GPIO_0[17],GPIO_0[15],GPIO_0[13],GPIO_0[11],GPIO_0[9],GPIO_0[7],GPIO_0[5],GPIO_0[3],GPIO_0[1]})
+//);
 
+wire reset;
 
+debounce db(
+	.clk(CLOCK_50),
+	.reset_n(1'b1),
+	.data_in(~KEY[0]),
+	.data_out(reset)
+);
 
-//=======================================================
-//  Structural coding
-//=======================================================
+reg [7:0] leds;
+assign LED = leds;
 
+always @(posedge CLOCK_50, posedge reset) begin: NIGHTRIDER_LED
+	reg [31:0] timeout;
+	reg dir;
+	if (reset == 1) begin
+		leds <= 1;
+		dir <= 0;
+		timeout <= 0;
+	end else begin
+		if(timeout>0) begin
+			timeout <= timeout - 1;
+		end else begin
+			if(~dir) begin 
+				if(leds!=8'b10000000) begin
+					leds <= leds<<1;
+				end else begin 
+					dir <= 1;
+					leds <= leds>>1;
+				end
+			end else begin
+				if(leds!=8'b00000001) begin
+					leds <= leds>>1;
+				end else begin 
+					dir <= 0;
+					leds <= leds<<1;
+				end
+			end
+			timeout <= 50_000_000/16; // 62ms timeout
+		end
+	end
+end
 
 
 endmodule

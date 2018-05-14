@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element DarkRoomOOTXdecoder_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element DarkRoom_0
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element clk_0
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP4CE22F17C6" />
+ <parameter name="deviceFamily" value="Cyclone IV E" />
+ <parameter name="deviceSpeedGrade" value="6" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface
+   name="darkroom_0_conduit_end"
+   internal="DarkRoom_0.conduit_end"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="darkroomootxdecoder_0_conduit_end"
+   internal="DarkRoomOOTXdecoder_0.conduit_end"
+   type="conduit"
+   dir="end" />
+ <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <module
+   name="DarkRoomOOTXdecoder_0"
+   kind="DarkRoomOOTXdecoder"
+   version="1.0"
+   enabled="1">
+  <parameter name="ENABLE_UART_TRANSMITTER" value="true" />
+  <parameter name="NUMBER_OF_SENSORS" value="12" />
+ </module>
+ <module name="DarkRoom_0" kind="DarkRoom" version="1.0" enabled="1">
+  <parameter name="CLK_SPEED" value="50000000" />
+  <parameter name="ENABLE_SPI_TRANSMITTER" value="true" />
+  <parameter name="NUMBER_OF_SENSORS" value="12" />
+ </module>
+ <module name="clk_0" kind="clock_source" version="17.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <connection
+   kind="clock"
+   version="17.0"
+   start="clk_0.clk"
+   end="DarkRoom_0.clock_sink" />
+ <connection
+   kind="clock"
+   version="17.0"
+   start="clk_0.clk"
+   end="DarkRoomOOTXdecoder_0.clock_sink" />
+ <connection
+   kind="reset"
+   version="17.0"
+   start="clk_0.clk_reset"
+   end="DarkRoom_0.reset" />
+ <connection
+   kind="reset"
+   version="17.0"
+   start="clk_0.clk_reset"
+   end="DarkRoomOOTXdecoder_0.reset" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>
