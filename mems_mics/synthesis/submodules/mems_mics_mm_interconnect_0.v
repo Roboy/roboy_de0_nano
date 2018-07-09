@@ -12,35 +12,34 @@ module mems_mics_mm_interconnect_0 (
 		input  wire [31:0] mems_that_shit_0_avalon_master_address,             //               mems_that_shit_0_avalon_master.address
 		output wire        mems_that_shit_0_avalon_master_waitrequest,         //                                             .waitrequest
 		input  wire        mems_that_shit_0_avalon_master_write,               //                                             .write
-		input  wire [31:0] mems_that_shit_0_avalon_master_writedata,           //                                             .writedata
-		output wire [9:0]  onchip_memory2_0_s2_address,                        //                          onchip_memory2_0_s2.address
+		input  wire [7:0]  mems_that_shit_0_avalon_master_writedata,           //                                             .writedata
+		output wire [11:0] onchip_memory2_0_s2_address,                        //                          onchip_memory2_0_s2.address
 		output wire        onchip_memory2_0_s2_write,                          //                                             .write
-		input  wire [31:0] onchip_memory2_0_s2_readdata,                       //                                             .readdata
-		output wire [31:0] onchip_memory2_0_s2_writedata,                      //                                             .writedata
-		output wire [3:0]  onchip_memory2_0_s2_byteenable,                     //                                             .byteenable
+		input  wire [7:0]  onchip_memory2_0_s2_readdata,                       //                                             .readdata
+		output wire [7:0]  onchip_memory2_0_s2_writedata,                      //                                             .writedata
 		output wire        onchip_memory2_0_s2_chipselect,                     //                                             .chipselect
 		output wire        onchip_memory2_0_s2_clken                           //                                             .clken
 	);
 
 	wire         mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_waitrequest;   // onchip_memory2_0_s2_translator:uav_waitrequest -> mems_that_shit_0_avalon_master_translator:uav_waitrequest
-	wire  [31:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_readdata;      // onchip_memory2_0_s2_translator:uav_readdata -> mems_that_shit_0_avalon_master_translator:uav_readdata
+	wire   [7:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_readdata;      // onchip_memory2_0_s2_translator:uav_readdata -> mems_that_shit_0_avalon_master_translator:uav_readdata
 	wire         mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_debugaccess;   // mems_that_shit_0_avalon_master_translator:uav_debugaccess -> onchip_memory2_0_s2_translator:uav_debugaccess
 	wire  [31:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_address;       // mems_that_shit_0_avalon_master_translator:uav_address -> onchip_memory2_0_s2_translator:uav_address
 	wire         mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_read;          // mems_that_shit_0_avalon_master_translator:uav_read -> onchip_memory2_0_s2_translator:uav_read
-	wire   [3:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_byteenable;    // mems_that_shit_0_avalon_master_translator:uav_byteenable -> onchip_memory2_0_s2_translator:uav_byteenable
+	wire   [0:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_byteenable;    // mems_that_shit_0_avalon_master_translator:uav_byteenable -> onchip_memory2_0_s2_translator:uav_byteenable
 	wire         mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_readdatavalid; // onchip_memory2_0_s2_translator:uav_readdatavalid -> mems_that_shit_0_avalon_master_translator:uav_readdatavalid
 	wire         mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_lock;          // mems_that_shit_0_avalon_master_translator:uav_lock -> onchip_memory2_0_s2_translator:uav_lock
 	wire         mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_write;         // mems_that_shit_0_avalon_master_translator:uav_write -> onchip_memory2_0_s2_translator:uav_write
-	wire  [31:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_writedata;     // mems_that_shit_0_avalon_master_translator:uav_writedata -> onchip_memory2_0_s2_translator:uav_writedata
-	wire   [2:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_burstcount;    // mems_that_shit_0_avalon_master_translator:uav_burstcount -> onchip_memory2_0_s2_translator:uav_burstcount
+	wire   [7:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_writedata;     // mems_that_shit_0_avalon_master_translator:uav_writedata -> onchip_memory2_0_s2_translator:uav_writedata
+	wire   [0:0] mems_that_shit_0_avalon_master_translator_avalon_universal_master_0_burstcount;    // mems_that_shit_0_avalon_master_translator:uav_burstcount -> onchip_memory2_0_s2_translator:uav_burstcount
 
 	altera_merlin_master_translator #(
 		.AV_ADDRESS_W                (32),
-		.AV_DATA_W                   (32),
+		.AV_DATA_W                   (8),
 		.AV_BURSTCOUNT_W             (1),
-		.AV_BYTEENABLE_W             (4),
+		.AV_BYTEENABLE_W             (1),
 		.UAV_ADDRESS_W               (32),
-		.UAV_BURSTCOUNT_W            (3),
+		.UAV_BURSTCOUNT_W            (1),
 		.USE_READ                    (0),
 		.USE_WRITE                   (1),
 		.USE_BEGINBURSTTRANSFER      (0),
@@ -51,7 +50,7 @@ module mems_mics_mm_interconnect_0 (
 		.USE_WAITREQUEST             (1),
 		.USE_READRESPONSE            (0),
 		.USE_WRITERESPONSE           (0),
-		.AV_SYMBOLS_PER_WORD         (4),
+		.AV_SYMBOLS_PER_WORD         (1),
 		.AV_ADDRESS_SYMBOLS          (1),
 		.AV_BURSTCOUNT_SYMBOLS       (0),
 		.AV_CONSTANT_BURST_BEHAVIOR  (0),
@@ -77,7 +76,7 @@ module mems_mics_mm_interconnect_0 (
 		.av_write               (mems_that_shit_0_avalon_master_write),                                              //                          .write
 		.av_writedata           (mems_that_shit_0_avalon_master_writedata),                                          //                          .writedata
 		.av_burstcount          (1'b1),                                                                              //               (terminated)
-		.av_byteenable          (4'b1111),                                                                           //               (terminated)
+		.av_byteenable          (1'b1),                                                                              //               (terminated)
 		.av_beginbursttransfer  (1'b0),                                                                              //               (terminated)
 		.av_begintransfer       (1'b0),                                                                              //               (terminated)
 		.av_chipselect          (1'b0),                                                                              //               (terminated)
@@ -95,21 +94,21 @@ module mems_mics_mm_interconnect_0 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (10),
-		.AV_DATA_W                      (32),
-		.UAV_DATA_W                     (32),
+		.AV_ADDRESS_W                   (12),
+		.AV_DATA_W                      (8),
+		.UAV_DATA_W                     (8),
 		.AV_BURSTCOUNT_W                (1),
-		.AV_BYTEENABLE_W                (4),
-		.UAV_BYTEENABLE_W               (4),
+		.AV_BYTEENABLE_W                (1),
+		.UAV_BYTEENABLE_W               (1),
 		.UAV_ADDRESS_W                  (32),
-		.UAV_BURSTCOUNT_W               (3),
+		.UAV_BURSTCOUNT_W               (1),
 		.AV_READLATENCY                 (1),
 		.USE_READDATAVALID              (0),
 		.USE_WAITREQUEST                (0),
 		.USE_UAV_CLKEN                  (0),
 		.USE_READRESPONSE               (0),
 		.USE_WRITERESPONSE              (0),
-		.AV_SYMBOLS_PER_WORD            (4),
+		.AV_SYMBOLS_PER_WORD            (1),
 		.AV_ADDRESS_SYMBOLS             (0),
 		.AV_BURSTCOUNT_SYMBOLS          (0),
 		.AV_CONSTANT_BURST_BEHAVIOR     (0),
@@ -138,13 +137,13 @@ module mems_mics_mm_interconnect_0 (
 		.av_write               (onchip_memory2_0_s2_write),                                                         //                         .write
 		.av_readdata            (onchip_memory2_0_s2_readdata),                                                      //                         .readdata
 		.av_writedata           (onchip_memory2_0_s2_writedata),                                                     //                         .writedata
-		.av_byteenable          (onchip_memory2_0_s2_byteenable),                                                    //                         .byteenable
 		.av_chipselect          (onchip_memory2_0_s2_chipselect),                                                    //                         .chipselect
 		.av_clken               (onchip_memory2_0_s2_clken),                                                         //                         .clken
 		.av_read                (),                                                                                  //              (terminated)
 		.av_begintransfer       (),                                                                                  //              (terminated)
 		.av_beginbursttransfer  (),                                                                                  //              (terminated)
 		.av_burstcount          (),                                                                                  //              (terminated)
+		.av_byteenable          (),                                                                                  //              (terminated)
 		.av_readdatavalid       (1'b0),                                                                              //              (terminated)
 		.av_waitrequest         (1'b0),                                                                              //              (terminated)
 		.av_writebyteenable     (),                                                                                  //              (terminated)
