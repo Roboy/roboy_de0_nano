@@ -123,9 +123,12 @@ input 		     [1:0]		GPIO_0_IN;
 inout 		    [33:0]		GPIO_1;
 input 		     [1:0]		GPIO_1_IN;
 
+
 mems_mics(
 	.clk_clk(CLOCK_50),
-	.reset_reset_n(~reset)
+	.reset_reset_n(~reset),
+	.mems_that_shit_0_conduit_end_pdm(GPIO_1[5]),
+	.mems_that_shit_0_conduit_end_pdm_clk_out(GPIO_1[1])
 );
 
 wire reset;

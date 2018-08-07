@@ -4,14 +4,17 @@
 
 `timescale 1 ps / 1 ps
 module mems_mics (
-		input  wire  clk_clk,       //   clk.clk
-		input  wire  reset_reset_n  // reset.reset_n
+		input  wire  clk_clk,                                  //                          clk.clk
+		input  wire  mems_that_shit_0_conduit_end_pdm,         // mems_that_shit_0_conduit_end.pdm
+		output wire  mems_that_shit_0_conduit_end_pdm_clk_out, //                             .pdm_clk_out
+		input  wire  reset_reset_n                             //                        reset.reset_n
 	);
 
+	wire         altpll_0_c0_clk;                                  // altpll_0:c0 -> mems_that_shit_0:pdm_clk
 	wire         mems_that_shit_0_avalon_master_waitrequest;       // mm_interconnect_0:mems_that_shit_0_avalon_master_waitrequest -> mems_that_shit_0:waitrequest
 	wire  [31:0] mems_that_shit_0_avalon_master_address;           // mems_that_shit_0:address -> mm_interconnect_0:mems_that_shit_0_avalon_master_address
-	wire         mems_that_shit_0_avalon_master_write;             // mems_that_shit_0:write -> mm_interconnect_0:mems_that_shit_0_avalon_master_write
 	wire   [7:0] mems_that_shit_0_avalon_master_writedata;         // mems_that_shit_0:write_data -> mm_interconnect_0:mems_that_shit_0_avalon_master_writedata
+	wire         mems_that_shit_0_avalon_master_write;             // mems_that_shit_0:write -> mm_interconnect_0:mems_that_shit_0_avalon_master_write
 	wire         mm_interconnect_0_onchip_memory2_0_s2_chipselect; // mm_interconnect_0:onchip_memory2_0_s2_chipselect -> onchip_memory2_0:chipselect2
 	wire   [7:0] mm_interconnect_0_onchip_memory2_0_s2_readdata;   // onchip_memory2_0:readdata2 -> mm_interconnect_0:onchip_memory2_0_s2_readdata
 	wire  [11:0] mm_interconnect_0_onchip_memory2_0_s2_address;    // mm_interconnect_0:onchip_memory2_0_s2_address -> onchip_memory2_0:address2
@@ -32,8 +35,31 @@ module mems_mics (
 	wire         mm_interconnect_1_onchip_memory2_0_s1_write;      // mm_interconnect_1:onchip_memory2_0_s1_write -> onchip_memory2_0:write
 	wire   [7:0] mm_interconnect_1_onchip_memory2_0_s1_writedata;  // mm_interconnect_1:onchip_memory2_0_s1_writedata -> onchip_memory2_0:writedata
 	wire         mm_interconnect_1_onchip_memory2_0_s1_clken;      // mm_interconnect_1:onchip_memory2_0_s1_clken -> onchip_memory2_0:clken
-	wire         rst_controller_reset_out_reset;                   // rst_controller:reset_out -> [mems_that_shit_0:reset, mm_interconnect_0:mems_that_shit_0_reset_reset_bridge_in_reset_reset, mm_interconnect_1:master_0_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:onchip_memory2_0_reset1_reset_bridge_in_reset_reset, onchip_memory2_0:reset, onchip_memory2_0:reset2, rst_translator:in_reset]
+	wire         rst_controller_reset_out_reset;                   // rst_controller:reset_out -> [altpll_0:reset, mems_that_shit_0:reset, mm_interconnect_0:mems_that_shit_0_reset_reset_bridge_in_reset_reset, mm_interconnect_1:master_0_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:onchip_memory2_0_reset1_reset_bridge_in_reset_reset, onchip_memory2_0:reset, onchip_memory2_0:reset2, rst_translator:in_reset]
 	wire         rst_controller_reset_out_reset_req;               // rst_controller:reset_req -> [onchip_memory2_0:reset_req, onchip_memory2_0:reset_req2, rst_translator:reset_req_in]
+
+	mems_mics_altpll_0 altpll_0 (
+		.clk                (clk_clk),                        //       inclk_interface.clk
+		.reset              (rst_controller_reset_out_reset), // inclk_interface_reset.reset
+		.read               (),                               //             pll_slave.read
+		.write              (),                               //                      .write
+		.address            (),                               //                      .address
+		.readdata           (),                               //                      .readdata
+		.writedata          (),                               //                      .writedata
+		.c0                 (altpll_0_c0_clk),                //                    c0.clk
+		.areset             (),                               //        areset_conduit.export
+		.scandone           (),                               //           (terminated)
+		.scandataout        (),                               //           (terminated)
+		.locked             (),                               //           (terminated)
+		.phasedone          (),                               //           (terminated)
+		.phasecounterselect (4'b0000),                        //           (terminated)
+		.phaseupdown        (1'b0),                           //           (terminated)
+		.phasestep          (1'b0),                           //           (terminated)
+		.scanclk            (1'b0),                           //           (terminated)
+		.scanclkena         (1'b0),                           //           (terminated)
+		.scandata           (1'b0),                           //           (terminated)
+		.configupdate       (1'b0)                            //           (terminated)
+	);
 
 	mems_mics_master_0 #(
 		.USE_PLI     (0),
@@ -56,10 +82,13 @@ module mems_mics (
 	MEMS_THAT_SHIT mems_that_shit_0 (
 		.reset       (rst_controller_reset_out_reset),             //         reset.reset
 		.address     (mems_that_shit_0_avalon_master_address),     // avalon_master.address
-		.write       (mems_that_shit_0_avalon_master_write),       //              .write
 		.write_data  (mems_that_shit_0_avalon_master_writedata),   //              .writedata
 		.waitrequest (mems_that_shit_0_avalon_master_waitrequest), //              .waitrequest
-		.clock       (clk_clk)                                     //    clock_sink.clk
+		.write       (mems_that_shit_0_avalon_master_write),       //              .write
+		.clock       (clk_clk),                                    //    clock_sink.clk
+		.pdm         (mems_that_shit_0_conduit_end_pdm),           //   conduit_end.pdm
+		.pdm_clk_out (mems_that_shit_0_conduit_end_pdm_clk_out),   //              .pdm_clk_out
+		.pdm_clk     (altpll_0_c0_clk)                             //       pdm_clk.clk
 	);
 
 	mems_mics_onchip_memory2_0 onchip_memory2_0 (
