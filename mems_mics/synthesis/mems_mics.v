@@ -79,7 +79,15 @@ module mems_mics (
 		.master_reset_reset   ()                               // master_reset.reset
 	);
 
-	MEMS_THAT_SHIT mems_that_shit_0 (
+	MEMS_THAT_SHIT #(
+		.IDLE              (4'b0000),
+		.WAIT_FOR_TRANSMIT (4'b0001),
+		.DATA_TO_REG       (4'b0010),
+		.FILTER            (4'b0011),
+		.DECIMATION        (4'b0100),
+		.TRANSMIT          (4'b0101),
+		.MEM_SIZE          (25'b0000000000001000000000000)
+	) mems_that_shit_0 (
 		.reset       (rst_controller_reset_out_reset),             //         reset.reset
 		.address     (mems_that_shit_0_avalon_master_address),     // avalon_master.address
 		.write_data  (mems_that_shit_0_avalon_master_writedata),   //              .writedata

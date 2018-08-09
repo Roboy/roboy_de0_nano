@@ -233,6 +233,46 @@
          type = "String";
       }
    }
+   element mems_mics
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element mems_mics
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element mems_mics
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element mems_mics
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element mems_mics
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
    element mems_that_shit_0
    {
       datum _sortIndex
@@ -492,7 +532,15 @@
    name="mems_that_shit_0"
    kind="mems_that_shit"
    version="1.0"
-   enabled="1" />
+   enabled="1">
+  <parameter name="DATA_TO_REG" value="2" />
+  <parameter name="DECIMATION" value="4" />
+  <parameter name="FILTER" value="3" />
+  <parameter name="IDLE" value="0" />
+  <parameter name="MEM_SIZE" value="4096" />
+  <parameter name="TRANSMIT" value="5" />
+  <parameter name="WAIT_FOR_TRANSMIT" value="1" />
+ </module>
  <module
    name="new_sdram_controller_0"
    kind="altera_avalon_new_sdram_controller"
