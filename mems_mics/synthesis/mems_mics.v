@@ -11,6 +11,7 @@ module mems_mics (
 	);
 
 	wire         altpll_0_c0_clk;                                  // altpll_0:c0 -> mems_that_shit_0:pdm_clk
+	wire         altpll_0_c1_clk;                                  // altpll_0:c1 -> mems_that_shit_0:dec_clk
 	wire         mems_that_shit_0_avalon_master_waitrequest;       // mm_interconnect_0:mems_that_shit_0_avalon_master_waitrequest -> mems_that_shit_0:waitrequest
 	wire  [31:0] mems_that_shit_0_avalon_master_address;           // mems_that_shit_0:address -> mm_interconnect_0:mems_that_shit_0_avalon_master_address
 	wire   [7:0] mems_that_shit_0_avalon_master_writedata;         // mems_that_shit_0:write_data -> mm_interconnect_0:mems_that_shit_0_avalon_master_writedata
@@ -47,6 +48,7 @@ module mems_mics (
 		.readdata           (),                               //                      .readdata
 		.writedata          (),                               //                      .writedata
 		.c0                 (altpll_0_c0_clk),                //                    c0.clk
+		.c1                 (altpll_0_c1_clk),                //                    c1.clk
 		.areset             (),                               //        areset_conduit.export
 		.scandone           (),                               //           (terminated)
 		.scandataout        (),                               //           (terminated)
@@ -81,11 +83,8 @@ module mems_mics (
 
 	MEMS_THAT_SHIT #(
 		.IDLE              (4'b0000),
-		.WAIT_FOR_TRANSMIT (4'b0001),
-		.DATA_TO_REG       (4'b0010),
-		.FILTER            (4'b0011),
-		.DECIMATION        (4'b0100),
 		.TRANSMIT          (4'b0101),
+		.WAIT_FOR_TRANSMIT (4'b0001),
 		.MEM_SIZE          (25'b0000000000001000000000000)
 	) mems_that_shit_0 (
 		.reset       (rst_controller_reset_out_reset),             //         reset.reset
@@ -96,7 +95,8 @@ module mems_mics (
 		.clock       (clk_clk),                                    //    clock_sink.clk
 		.pdm         (mems_that_shit_0_conduit_end_pdm),           //   conduit_end.pdm
 		.pdm_clk_out (mems_that_shit_0_conduit_end_pdm_clk_out),   //              .pdm_clk_out
-		.pdm_clk     (altpll_0_c0_clk)                             //       pdm_clk.clk
+		.pdm_clk     (altpll_0_c0_clk),                            //       pdm_clk.clk
+		.dec_clk     (altpll_0_c1_clk)                             //       dec_clk.clk
 	);
 
 	mems_mics_onchip_memory2_0 onchip_memory2_0 (
