@@ -7,6 +7,7 @@ module mems_mics (
 		input  wire  clk_clk,                                  //                          clk.clk
 		input  wire  mems_that_shit_0_conduit_end_pdm,         // mems_that_shit_0_conduit_end.pdm
 		output wire  mems_that_shit_0_conduit_end_pdm_clk_out, //                             .pdm_clk_out
+		output wire  mems_that_shit_0_conduit_end_dec_clk_out, //                             .dec_clk_out
 		input  wire  reset_reset_n                             //                        reset.reset_n
 	);
 
@@ -95,6 +96,7 @@ module mems_mics (
 		.clock       (clk_clk),                                    //    clock_sink.clk
 		.pdm         (mems_that_shit_0_conduit_end_pdm),           //   conduit_end.pdm
 		.pdm_clk_out (mems_that_shit_0_conduit_end_pdm_clk_out),   //              .pdm_clk_out
+		.dec_clk_out (mems_that_shit_0_conduit_end_dec_clk_out),   //              .dec_clk_out
 		.pdm_clk     (altpll_0_c0_clk),                            //       pdm_clk.clk
 		.dec_clk     (altpll_0_c1_clk)                             //       dec_clk.clk
 	);

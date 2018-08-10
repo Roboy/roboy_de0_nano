@@ -128,7 +128,8 @@ mems_mics(
 	.clk_clk(CLOCK_50),
 	.reset_reset_n(~reset),
 	.mems_that_shit_0_conduit_end_pdm(GPIO_1[5]),
-	.mems_that_shit_0_conduit_end_pdm_clk_out(GPIO_1[1])
+	.mems_that_shit_0_conduit_end_pdm_clk_out(GPIO_1[1]), 
+	.mems_that_shit_0_conduit_end_dec_clk_out(GPIO_1[2])
 );
 
 wire reset;
