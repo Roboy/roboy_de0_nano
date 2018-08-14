@@ -22,6 +22,8 @@ module mems_mics_onchip_memory2_0 (
                                     // inputs:
                                      address,
                                      address2,
+                                     byteenable,
+                                     byteenable2,
                                      chipselect,
                                      chipselect2,
                                      clk,
@@ -47,10 +49,12 @@ module mems_mics_onchip_memory2_0 (
   parameter INIT_FILE = "mems_mics_onchip_memory2_0.hex";
 
 
-  output  [  7: 0] readdata;
-  output  [  7: 0] readdata2;
-  input   [ 11: 0] address;
-  input   [ 11: 0] address2;
+  output  [255: 0] readdata;
+  output  [255: 0] readdata2;
+  input   [  6: 0] address;
+  input   [  6: 0] address2;
+  input   [ 31: 0] byteenable;
+  input   [ 31: 0] byteenable2;
   input            chipselect;
   input            chipselect2;
   input            clk;
@@ -64,14 +68,14 @@ module mems_mics_onchip_memory2_0 (
   input            reset_req2;
   input            write;
   input            write2;
-  input   [  7: 0] writedata;
-  input   [  7: 0] writedata2;
+  input   [255: 0] writedata;
+  input   [255: 0] writedata2;
 
 
 wire             clocken0;
 wire             clocken1;
-wire    [  7: 0] readdata;
-wire    [  7: 0] readdata2;
+wire    [255: 0] readdata;
+wire    [255: 0] readdata2;
 wire             wren;
 wire             wren2;
   assign wren = chipselect & write;
@@ -82,6 +86,8 @@ wire             wren2;
     (
       .address_a (address),
       .address_b (address2),
+      .byteena_a (byteenable),
+      .byteena_b (byteenable2),
       .clock0 (clk),
       .clock1 (clk2),
       .clocken0 (clocken0),
@@ -100,18 +106,20 @@ wire             wren2;
            the_altsyncram.indata_reg_b = "CLOCK1",
            the_altsyncram.init_file = INIT_FILE,
            the_altsyncram.lpm_type = "altsyncram",
-           the_altsyncram.maximum_depth = 4096,
-           the_altsyncram.numwords_a = 4096,
-           the_altsyncram.numwords_b = 4096,
+           the_altsyncram.maximum_depth = 128,
+           the_altsyncram.numwords_a = 128,
+           the_altsyncram.numwords_b = 128,
            the_altsyncram.operation_mode = "BIDIR_DUAL_PORT",
            the_altsyncram.outdata_reg_a = "UNREGISTERED",
            the_altsyncram.outdata_reg_b = "UNREGISTERED",
            the_altsyncram.ram_block_type = "AUTO",
            the_altsyncram.read_during_write_mode_mixed_ports = "DONT_CARE",
-           the_altsyncram.width_a = 8,
-           the_altsyncram.width_b = 8,
-           the_altsyncram.widthad_a = 12,
-           the_altsyncram.widthad_b = 12,
+           the_altsyncram.width_a = 256,
+           the_altsyncram.width_b = 256,
+           the_altsyncram.width_byteena_a = 32,
+           the_altsyncram.width_byteena_b = 32,
+           the_altsyncram.widthad_a = 7,
+           the_altsyncram.widthad_b = 7,
            the_altsyncram.wrcontrol_wraddress_reg_b = "CLOCK1";
 
   //s1, which is an e_avalon_slave

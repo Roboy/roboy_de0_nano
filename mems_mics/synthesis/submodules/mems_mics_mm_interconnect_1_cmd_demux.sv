@@ -28,7 +28,7 @@
 // ------------------------------------------
 // Generation parameters:
 //   output_name:         mems_mics_mm_interconnect_1_cmd_demux
-//   ST_DATA_W:           102
+//   ST_DATA_W:           105
 //   ST_CHANNEL_W:        1
 //   NUM_OUTPUTS:         1
 //   VALID_WIDTH:         1
@@ -46,7 +46,7 @@ module mems_mics_mm_interconnect_1_cmd_demux
     // Sink
     // -------------------
     input  [1-1      : 0]   sink_valid,
-    input  [102-1    : 0]   sink_data, // ST_DATA_W=102
+    input  [105-1    : 0]   sink_data, // ST_DATA_W=105
     input  [1-1 : 0]   sink_channel, // ST_CHANNEL_W=1
     input                         sink_startofpacket,
     input                         sink_endofpacket,
@@ -56,7 +56,7 @@ module mems_mics_mm_interconnect_1_cmd_demux
     // Sources 
     // -------------------
     output reg                      src0_valid,
-    output reg [102-1    : 0] src0_data, // ST_DATA_W=102
+    output reg [105-1    : 0] src0_data, // ST_DATA_W=105
     output reg [1-1 : 0] src0_channel, // ST_CHANNEL_W=1
     output reg                      src0_startofpacket,
     output reg                      src0_endofpacket,
