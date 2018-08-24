@@ -54,6 +54,7 @@ c5_pin_model_dump.txt
 # kevin found them
 *.sv
 *.bin
+simulation
 
 # recorded files
 *.bmp

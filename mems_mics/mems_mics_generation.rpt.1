@@ -1,5 +1,30 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate /home/roboy/talk_to_two/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics.qsys --block-symbol-file --output-directory=/home/roboy/talk_to_two/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics --family="Cyclone IV E" --part=EP4CE22F17C6
+Progress: Loading roboy_de0_nano/mems_mics.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 17.1]
+Progress: Parameterizing module altpll_0
+Progress: Adding clk_0 [clock_source 17.1]
+Progress: Parameterizing module clk_0
+Progress: Adding master_0 [altera_jtag_avalon_master 17.1]
+Progress: Parameterizing module master_0
+Progress: Adding mems_that_shit_0 [mems_that_shit 1.0]
+Progress: Parameterizing module mems_that_shit_0
+Progress: Adding new_sdram_controller_0 [altera_avalon_new_sdram_controller 17.1]
+Progress: Parameterizing module new_sdram_controller_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 17.1]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: mems_mics.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: mems_mics.altpll_0: altpll_0.pll_slave must be connected to an Avalon-MM master
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info:
 Info: Starting: Create HDL design files for synthesis
-Info: qsys-generate /home/parallels/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics.qsys --synthesis=VERILOG --output-directory=/home/parallels/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics/synthesis --family="Cyclone IV E" --part=EP4CE22F17C6
+Info: qsys-generate /home/roboy/talk_to_two/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics.qsys --synthesis=VERILOG --output-directory=/home/roboy/talk_to_two/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics/synthesis --family="Cyclone IV E" --part=EP4CE22F17C6
 Progress: Loading roboy_de0_nano/mems_mics.qsys
 Progress: Reading input file
 Progress: Adding altpll_0 [altpll 17.1]
@@ -34,7 +59,7 @@ Info: altpll_0: "mems_mics" instantiated altpll "altpll_0"
 Info: master_0: "mems_mics" instantiated altera_jtag_avalon_master "master_0"
 Info: mems_that_shit_0: "mems_mics" instantiated mems_that_shit "mems_that_shit_0"
 Info: onchip_memory2_0: Starting RTL generation for module 'mems_mics_onchip_memory2_0'
-Info: onchip_memory2_0:   Generation command is [exec /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/linux64/perl/bin/perl -I /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/linux64/perl/lib -I /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/sopc_builder/bin/europa -I /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/sopc_builder/bin/perl_lib -I /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/sopc_builder/bin -I /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/../ip/altera/sopc_builder_ip/common -I /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=mems_mics_onchip_memory2_0 --dir=/tmp/alt7757_5410016173798304285.dir/0031_onchip_memory2_0_gen/ --quartus_dir=/media/psf/Home/Documents/Uni/RCI/Roboy/ubuntu_home/intelFPGA_lite/17.1/quartus --verilog --config=/tmp/alt7757_5410016173798304285.dir/0031_onchip_memory2_0_gen//mems_mics_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
+Info: onchip_memory2_0:   Generation command is [exec /home/roboy/intelFPGA/17.1/quartus/linux64/perl/bin/perl -I /home/roboy/intelFPGA/17.1/quartus/linux64/perl/lib -I /home/roboy/intelFPGA/17.1/quartus/sopc_builder/bin/europa -I /home/roboy/intelFPGA/17.1/quartus/sopc_builder/bin/perl_lib -I /home/roboy/intelFPGA/17.1/quartus/sopc_builder/bin -I /home/roboy/intelFPGA/17.1/quartus/../ip/altera/sopc_builder_ip/common -I /home/roboy/intelFPGA/17.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/roboy/intelFPGA/17.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=mems_mics_onchip_memory2_0 --dir=/tmp/alt7757_8812511219795791322.dir/0006_onchip_memory2_0_gen/ --quartus_dir=/home/roboy/intelFPGA/17.1/quartus --verilog --config=/tmp/alt7757_8812511219795791322.dir/0006_onchip_memory2_0_gen//mems_mics_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
 Info: onchip_memory2_0: Done RTL generation for module 'mems_mics_onchip_memory2_0'
 Info: onchip_memory2_0: "mems_mics" instantiated altera_avalon_onchip_memory2 "onchip_memory2_0"
 Info: mm_interconnect_0: "mems_mics" instantiated altera_mm_interconnect "mm_interconnect_0"
@@ -58,9 +83,9 @@ Info: router_001: "mm_interconnect_1" instantiated altera_merlin_router "router_
 Info: cmd_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "cmd_demux"
 Info: cmd_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "cmd_mux"
 Info: rsp_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "rsp_mux"
-Info: Reusing file /home/parallels/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /home/roboy/talk_to_two/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: onchip_memory2_0_s1_cmd_width_adapter: "mm_interconnect_1" instantiated altera_merlin_width_adapter "onchip_memory2_0_s1_cmd_width_adapter"
-Info: Reusing file /home/parallels/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+Info: Reusing file /home/roboy/talk_to_two/git_repos/ss18_talk_to_two/transformatrix/roboy_de0_nano/mems_mics/synthesis/submodules/altera_merlin_burst_uncompressor.sv
 Info: avalon_st_adapter: "mm_interconnect_1" instantiated altera_avalon_st_adapter "avalon_st_adapter"
 Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
 Info: mems_mics: Done "mems_mics" with 28 modules, 44 files
